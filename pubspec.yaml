@@ -1,7 +1,7 @@
 name: clear_weather
-description: "A new Flutter project."
+description: "Clean, minimal weather app with hourly forecasts and location-based updates."
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0+1
 
 environment:
   sdk: ^3.9.0
@@ -9,11 +9,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dio: ^5.3.0
+  flutter_riverpod: ^3.0.0-dev.17
+  intl: ^0.20.2
+  geolocator: ^14.0.2
+  lucide_flutter: ^0.540.0
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
-
+  custom_lint: ^0.8.0
+  flutter_lints: ^6.0.0
+  riverpod_lint: ^3.0.0-dev.17
 flutter:
   uses-material-design: true
