@@ -7,8 +7,21 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home Page')),
-      body: Center(child: Text('Welcome to the Home Page!')),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Expanded(flex: 3, child: Placeholder()),
+              const SizedBox(height: 24),
+              const Expanded(flex: 2, child: Placeholder()),
+              const SizedBox(height: 24),
+              const Expanded(flex: 2, child: Placeholder()),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
