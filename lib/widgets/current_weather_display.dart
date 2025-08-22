@@ -43,23 +43,16 @@ class CurrentWeatherDisplay extends ConsumerWidget {
             ),
 
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Column(
-                  children: [
-                    Text(
-                      'Cloudy',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text('Precip: 30%', style: TextStyle(fontSize: 20)),
-                    Text('Humidity: 90%', style: TextStyle(fontSize: 20)),
-                    Text('Wind: 8 km/h', style: TextStyle(fontSize: 20)),
-                  ],
+                Text(
+                  'Cloudy',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
+                SizedBox(height: 8),
+                Text('Precip: 30%', style: TextStyle(fontSize: 20)),
+                Text('Humidity: 90%', style: TextStyle(fontSize: 20)),
+                Text('Wind: 8 km/h', style: TextStyle(fontSize: 20)),
               ],
             ),
           ],
