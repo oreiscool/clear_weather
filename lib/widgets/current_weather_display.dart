@@ -19,7 +19,7 @@ class CurrentWeatherDisplay extends ConsumerWidget {
               children: [
                 Text(
                   'Now',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
                 ),
                 Text(
                   'Location',
