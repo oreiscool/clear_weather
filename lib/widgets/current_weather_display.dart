@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:clear_weather/theme/app_theme.dart';
 
 class CurrentWeatherDisplay extends ConsumerWidget {
   const CurrentWeatherDisplay({super.key});
@@ -17,27 +18,15 @@ class CurrentWeatherDisplay extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Now',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
-                ),
-                Text(
-                  'Location',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                ),
+                Text('Last Updated: Now', style: AppTextStyles.lastUpdated),
+                Text('Location', style: AppTextStyles.location),
                 Row(
                   children: [
-                    Text(
-                      '25°',
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    Text('25°', style: AppTextStyles.temperature),
                     Icon(LucideIcons.cloudy, size: 48),
                   ],
                 ),
-                Text('Feels like 27°', style: TextStyle(fontSize: 20)),
+                Text('Feels like 27°', style: AppTextStyles.feelsLike),
                 SizedBox(height: 24),
               ],
             ),
@@ -45,14 +34,11 @@ class CurrentWeatherDisplay extends ConsumerWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  'Cloudy',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                ),
+                Text('Cloudy', style: AppTextStyles.condition),
                 SizedBox(height: 8),
-                Text('Precip: 30%', style: TextStyle(fontSize: 20)),
-                Text('Humidity: 90%', style: TextStyle(fontSize: 20)),
-                Text('Wind: 8 km/h', style: TextStyle(fontSize: 20)),
+                Text('Precip: 30%', style: AppTextStyles.secondaryDetails),
+                Text('Humidity: 90%', style: AppTextStyles.secondaryDetails),
+                Text('Wind: 8 km/h', style: AppTextStyles.secondaryDetails),
               ],
             ),
           ],
