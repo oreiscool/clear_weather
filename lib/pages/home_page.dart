@@ -3,14 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clear_weather/widgets/current_weather_display.dart';
 import 'package:clear_weather/widgets/hourly_forecast_display.dart';
 import 'package:clear_weather/widgets/daily_forecast_display.dart';
-import 'package:clear_weather/constants/colors.dart';
+import 'package:clear_weather/widgets/settings_modal.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.surface,
+        actions: [
+          IconButton(
+            onPressed: () => showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => const SettingsModal(),
+            ),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -19,9 +33,15 @@ class HomePage extends ConsumerWidget {
             children: [
               const Expanded(flex: 4, child: CurrentWeatherDisplay()),
               const SizedBox(height: 16),
-              const Divider(height: 48, color: AppColors.surfaceVariant),
+              Divider(
+                height: 48,
+                color: theme.colorScheme.surfaceContainerHighest,
+              ),
               const Expanded(flex: 3, child: HourlyForecastDisplay()),
-              const Divider(height: 48, color: AppColors.surfaceVariant),
+              Divider(
+                height: 48,
+                color: theme.colorScheme.surfaceContainerHighest,
+              ),
               const SizedBox(height: 32),
               const Expanded(flex: 2, child: DailyForecastDisplay()),
               const Spacer(flex: 1),
