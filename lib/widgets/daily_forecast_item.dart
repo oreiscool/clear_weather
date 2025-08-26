@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:clear_weather/providers/text_styles_provider.dart';
+import 'package:clear_weather/models/current_weather_model.dart';
 
 class DailyForecastItem extends ConsumerWidget {
-  const DailyForecastItem({super.key});
+  const DailyForecastItem(this.item, this.index, {super.key});
+  final DailyWeatherModel item;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +23,10 @@ class DailyForecastItem extends ConsumerWidget {
             SizedBox(height: 8),
             Icon(LucideIcons.cloudy, size: 32),
             SizedBox(height: 4),
-            Text('28°/22°', style: textStyles.dailyTemp),
+            Text(
+              '${item.temperatureMax}°/${item.temperatureMin}°',
+              style: textStyles.dailyTemp,
+            ),
           ],
         ),
       ),

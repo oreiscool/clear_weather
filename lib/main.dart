@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:clear_weather/pages/home_page.dart';
+import 'package:clear_weather/pages/weather_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clear_weather/theme/app_theme.dart';
 import 'package:clear_weather/providers/theme_provider.dart';
@@ -19,7 +19,7 @@ class MainApp extends ConsumerWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
-      home: const HomePage(),
+      home: const WeatherPage(),
     );
   }
 }
