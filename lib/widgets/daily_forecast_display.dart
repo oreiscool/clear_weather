@@ -11,12 +11,12 @@ class DailyForecastDisplay extends ConsumerWidget {
     final weatherPackage = ref.watch(weatherDataProvider);
     return weatherPackage.when(
       data: (data) {
-        final dailyWeather = data.dailyWeather;
+        final dailyWeather = data.dailyDisplay;
         return ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: dailyWeather.length,
           itemBuilder: (context, index) {
-            return DailyForecastItem(dailyWeather[index], index);
+            return DailyForecastItem(dailyWeather[index]);
           },
         );
       },

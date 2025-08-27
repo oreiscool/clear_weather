@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:clear_weather/providers/text_styles_provider.dart';
-import 'package:clear_weather/models/current_weather_model.dart';
+import 'package:clear_weather/models/weather_model.dart';
 
 class HourlyForecastItem extends ConsumerWidget {
   const HourlyForecastItem(this.item, this.index, {super.key});

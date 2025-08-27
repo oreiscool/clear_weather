@@ -11,7 +11,7 @@ class HourlyForecastDisplay extends ConsumerWidget {
     final weatherPackage = ref.watch(weatherDataProvider);
     return weatherPackage.when(
       data: (data) {
-        final hourlyWeather = data.hourlyWeather;
+        final hourlyWeather = data.weather.hourlyWeather;
         return ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: hourlyWeather.length,

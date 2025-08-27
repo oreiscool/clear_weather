@@ -1,16 +1,36 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clear_weather/services/weather_service.dart';
-import 'package:clear_weather/models/current_weather_model.dart';
+import 'package:clear_weather/models/weather_model.dart';
+import 'package:clear_weather/providers/location_provider.dart';
+import 'package:clear_weather/models/weather_display_model.dart';
+import 'package:clear_weather/utils/formatters.dart';
 
 final weatherServiceProvider = Provider<WeatherService>((ref) {
   return WeatherService();
 });
 
-final weatherDataProvider = FutureProvider<WeatherPackage>((ref) async {
-  final weatherService = ref.watch(weatherServiceProvider);
-  final weatherData = await weatherService.getWeather(
-    latitude: 34.8,
-    longitude: 51.5074,
-  );
-  return weatherData;
-});
+final weatherDataProvider =
+    FutureProvider<
+      ({WeatherPackage weather, List<WeatherDisplayModel> dailyDisplay})
+    >((ref) async {
+      final weatherService = ref.watch(weatherServiceProvider);
+      final locationService = ref.watch(locationServiceProvider);
+      final position = await locationService.getCurrentLocation();
+      final weatherData = await weatherService.getWeather(
+        latitude: position.latitude,
+        longitude: position.longitude,
+      );
+
+      final List<WeatherDisplayModel> formattedDailyWeather = weatherData
+          .dailyWeather
+          .map((day) {
+            return WeatherDisplayModel(
+              day: Formatters.toDayofWeek(day.time),
+              tempMax: '${day.temperatureMax}°',
+              tempMin: '${day.temperatureMin}°',
+            );
+          })
+          .toList();
+
+      return (weather: weatherData, dailyDisplay: formattedDailyWeather);
+    });

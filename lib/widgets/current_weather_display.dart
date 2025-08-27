@@ -13,7 +13,7 @@ class CurrentWeatherDisplay extends ConsumerWidget {
     final textStyles = ref.watch(textStylesProvider);
     return weatherPackage.when(
       data: (data) {
-        final currentWeather = data.currentWeather;
+        final currentWeather = data.weather.currentWeather;
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

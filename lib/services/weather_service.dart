@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_meteo/open_meteo.dart';
-import 'package:clear_weather/models/current_weather_model.dart';
+import 'package:clear_weather/models/weather_model.dart';
 
 class WeatherService {
   final WeatherApi _weatherApi = WeatherApi(
