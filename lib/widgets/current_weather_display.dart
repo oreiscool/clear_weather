@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:clear_weather/providers/text_styles_provider.dart';
 import 'package:clear_weather/providers/weather_provider.dart';
 
@@ -15,6 +14,9 @@ class CurrentWeatherDisplay extends ConsumerWidget {
       data: (data) {
         final currentWeather = data.weather.currentWeather;
         final cityName = data.cityName;
+        final description = data.weatherDescription;
+        final icon = data.currentWeatherIcon;
+        final lastUpdated = data.formattedTime;
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -26,8 +28,8 @@ class CurrentWeatherDisplay extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Last Updated: ${currentWeather.time.hour}:${currentWeather.time.minute.toString().padLeft(2, '0')}',
-                      style: textStyles.lastUpdated,
+                      'Last Updated: $lastUpdated',
+                      style: textStyles.captionBold,
                     ),
                     Text(cityName, style: textStyles.location),
                     Row(
@@ -36,7 +38,7 @@ class CurrentWeatherDisplay extends ConsumerWidget {
                           '${currentWeather.temperature}°',
                           style: textStyles.temperature,
                         ),
-                        Icon(LucideIcons.cloudy, size: 48),
+                        Icon(icon, size: 48),
                       ],
                     ),
                     Text(
@@ -50,7 +52,7 @@ class CurrentWeatherDisplay extends ConsumerWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('Cloudy', style: textStyles.condition),
+                    Text(description, style: textStyles.condition),
                     SizedBox(height: 8),
                     Text(
                       'Precip: ${currentWeather.precipitation}%',

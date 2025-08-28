@@ -105,6 +105,7 @@ class WeatherService {
         currentWeather: currentWeather,
         hourlyWeather: hourlyWeather,
         dailyWeather: dailyWeather,
+        referenceTime: now,
       );
     } catch (e) {
       debugPrint('Error fetching weather data: $e');

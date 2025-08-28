@@ -73,7 +73,7 @@ class AppTextStyles {
     required this.textTertiary,
   });
 
-  TextStyle get lastUpdated => TextStyle(
+  TextStyle get captionBold => TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w500,
     color: textSecondary,

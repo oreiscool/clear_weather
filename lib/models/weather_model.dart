@@ -50,10 +50,12 @@ class WeatherPackage {
   final CurrentWeatherModel currentWeather;
   final List<HourlyWeatherModel> hourlyWeather;
   final List<DailyWeatherModel> dailyWeather;
+  final DateTime referenceTime;
 
   WeatherPackage({
     required this.currentWeather,
     required this.hourlyWeather,
     required this.dailyWeather,
+    required this.referenceTime,
   });
 }
