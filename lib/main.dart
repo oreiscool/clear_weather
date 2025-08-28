@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:clear_weather/pages/weather_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:clear_weather/theme/app_theme.dart';
 import 'package:clear_weather/providers/theme_provider.dart';
 
 void main() {
@@ -13,12 +12,10 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeProvider);
+    final activeTheme = ref.watch(activeThemeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeMode,
+      theme: activeTheme,
       home: const WeatherPage(),
     );
   }

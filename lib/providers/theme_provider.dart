@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:clear_weather/theme/app_theme.dart';
 
 final themeProvider = NotifierProvider<ThemeNotifier, ThemeMode>(
   ThemeNotifier.new,
 );
+
+final activeThemeProvider = Provider<ThemeData>((ref) {
+  final themeMode = ref.watch(themeProvider);
+  switch (themeMode) {
+    case ThemeMode.dark:
+      return AppTheme.darkTheme;
+    default:
+      return AppTheme.lightTheme;
+  }
+});
 
 class ThemeNotifier extends Notifier<ThemeMode> {
   static const _themePrefKey = 'themeMode';
