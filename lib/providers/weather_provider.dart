@@ -11,11 +11,16 @@ final weatherServiceProvider = Provider<WeatherService>((ref) {
 
 final weatherDataProvider =
     FutureProvider<
-      ({WeatherPackage weather, List<WeatherDisplayModel> dailyDisplay})
+      ({
+        WeatherPackage weather,
+        List<WeatherDisplayModel> dailyDisplay,
+        String cityName,
+      })
     >((ref) async {
       final weatherService = ref.watch(weatherServiceProvider);
       final locationService = ref.watch(locationServiceProvider);
       final position = await locationService.getCurrentLocation();
+      final cityName = await locationService.getCityName(position);
       final weatherData = await weatherService.getWeather(
         latitude: position.latitude,
         longitude: position.longitude,
@@ -26,11 +31,15 @@ final weatherDataProvider =
           .map((day) {
             return WeatherDisplayModel(
               day: Formatters.toDayofWeek(day.time),
-              tempMax: '${day.temperatureMax}°',
-              tempMin: '${day.temperatureMin}°',
+              tempMax: '${day.temperatureMax.round()}°',
+              tempMin: '${day.temperatureMin.round()}°',
             );
           })
           .toList();
 
-      return (weather: weatherData, dailyDisplay: formattedDailyWeather);
+      return (
+        weather: weatherData,
+        dailyDisplay: formattedDailyWeather,
+        cityName: cityName,
+      );
     });

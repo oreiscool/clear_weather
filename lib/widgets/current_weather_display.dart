@@ -14,6 +14,7 @@ class CurrentWeatherDisplay extends ConsumerWidget {
     return weatherPackage.when(
       data: (data) {
         final currentWeather = data.weather.currentWeather;
+        final cityName = data.cityName;
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -28,7 +29,7 @@ class CurrentWeatherDisplay extends ConsumerWidget {
                       'Last Updated: ${currentWeather.time.hour}:${currentWeather.time.minute.toString().padLeft(2, '0')}',
                       style: textStyles.lastUpdated,
                     ),
-                    Text('Location', style: textStyles.location),
+                    Text(cityName, style: textStyles.location),
                     Row(
                       children: [
                         Text(

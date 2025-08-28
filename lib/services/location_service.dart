@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class LocationService {
   Future<Position> getCurrentLocation() async {
@@ -21,5 +23,21 @@ class LocationService {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  Future<String> getCityName(Position position) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+      Placemark place = placemarks[0];
+      return place.locality ?? 'Unknown Location';
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error occurred while fetching city name: $e');
+      }
+      return 'Unknown Location';
+    }
   }
 }
