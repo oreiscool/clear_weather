@@ -62,19 +62,22 @@ final weatherDataProvider =
           .hourlyWeather
           .asMap()
           .entries
-          .map((hour) {
-            final int index = hour.key;
+          .map((entry) {
+            final int index = entry.key;
+            final HourlyWeatherModel hour = entry.value;
             final bool isNow = index == 0;
+            final int weatherCode = hour.weatherCode;
+            final bool isPrecipitating = weatherCode >= 51 && weatherCode <= 99;
             return HourlyDisplayModel(
-              time: isNow ? 'NOW' : Formatters.toHour(hour.value.time),
-              temperature: '${hour.value.temperature.round()}°',
-              precipitation: isNow ? '' : '${(hour.value.precipitation)}%',
+              time: isNow ? 'NOW' : Formatters.toHour(hour.time),
+              temperature: '${hour.temperature.round()}°',
+              precipitation: isPrecipitating ? '' : '${(hour.precipitation)}%',
               weatherIcon: WeatherUtils.getWeatherIcon(
-                hour.value.weatherCode,
-                isDay: hour.value.time.hour >= 6 && hour.value.time.hour < 18,
+                hour.weatherCode,
+                isDay: hour.time.hour >= 6 && hour.time.hour < 18,
               ),
               weatherDescription: WeatherUtils.getWeatherDescription(
-                hour.value.weatherCode,
+                hour.weatherCode,
               ),
               isNow: isNow,
             );
