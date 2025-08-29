@@ -36,6 +36,7 @@ final weatherDataProvider =
       );
       final IconData currentWeatherIcon = WeatherUtils.getWeatherIcon(
         weatherData.currentWeather.weatherCode,
+        isDay: weatherData.currentWeather.isDay == 1,
       );
       final String formattedTime = Formatters.toHour(
         weatherData.currentWeather.time,
@@ -68,7 +69,10 @@ final weatherDataProvider =
               time: isNow ? 'NOW' : Formatters.toHour(hour.value.time),
               temperature: '${hour.value.temperature.round()}°',
               precipitation: isNow ? '' : '${(hour.value.precipitation)}%',
-              weatherIcon: WeatherUtils.getWeatherIcon(hour.value.weatherCode),
+              weatherIcon: WeatherUtils.getWeatherIcon(
+                hour.value.weatherCode,
+                isDay: hour.value.time.hour >= 6 && hour.value.time.hour < 18,
+              ),
               weatherDescription: WeatherUtils.getWeatherDescription(
                 hour.value.weatherCode,
               ),

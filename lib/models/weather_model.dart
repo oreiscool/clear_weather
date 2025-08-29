@@ -6,6 +6,7 @@ class CurrentWeatherModel {
   final int precipitation;
   final int windSpeed;
   final int weatherCode;
+  final int isDay;
 
   CurrentWeatherModel({
     required this.time,
@@ -15,6 +16,7 @@ class CurrentWeatherModel {
     required this.precipitation,
     required this.windSpeed,
     required this.weatherCode,
+    required this.isDay,
   });
 }
 

@@ -19,6 +19,7 @@ class WeatherService {
       final response = await _weatherApi.request(
         latitude: latitude,
         longitude: longitude,
+        current: {WeatherCurrent.is_day},
         hourly: {
           WeatherHourly.temperature_2m,
           WeatherHourly.relative_humidity_2m,
@@ -49,6 +50,8 @@ class WeatherService {
         index = times.isNotEmpty ? times.length - 1 : 0;
       }
       final currentTime = times[index];
+      final isDayValue =
+          response.currentData[WeatherCurrent.is_day]?.value.toInt() ?? 1;
 
       final currentWeather = CurrentWeatherModel(
         time: currentTime.toLocal(),
@@ -58,6 +61,7 @@ class WeatherService {
         precipitation: precipMap.values[currentTime]!.toInt(),
         windSpeed: windMap.values[currentTime]!.round(),
         weatherCode: codeMap.values[currentTime]!.toInt(),
+        isDay: isDayValue,
       );
 
       final List<HourlyWeatherModel> hourlyWeather = [];

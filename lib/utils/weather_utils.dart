@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class WeatherUtils {
-  static IconData getWeatherIcon(int code) {
+  static IconData getWeatherIcon(int code, {bool isDay = true}) {
     switch (code) {
       case 0: // Clear sky
-        return LucideIcons.sun;
+        return isDay ? LucideIcons.sun : LucideIcons.moon;
       case 1: // Mainly clear
-        return LucideIcons.cloudSun; // More accurate than just 'cloudy'
+        return isDay
+            ? LucideIcons.cloudSun
+            : LucideIcons.cloudMoon; // More accurate than just 'cloudy'
       case 2: // Partly cloudy
         return LucideIcons.cloudy;
       case 3: // Overcast
