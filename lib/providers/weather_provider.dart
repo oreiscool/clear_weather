@@ -39,7 +39,7 @@ final weatherDataProvider =
         isDay: weatherData.currentWeather.isDay == 1,
       );
       final String formattedTime = Formatters.toRelativeTime(
-        weatherData.currentWeather.time,
+        weatherData.referenceTime,
       );
 
       final List<WeatherDisplayModel> formattedDailyWeather = weatherData

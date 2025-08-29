@@ -29,6 +29,7 @@ class WeatherPage extends ConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(weatherDataProvider);
+          return await ref.read(weatherDataProvider.future);
         },
         child: SafeArea(
           child: Padding(
