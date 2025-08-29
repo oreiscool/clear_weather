@@ -15,6 +15,7 @@ class WeatherService {
   }) async {
     try {
       final now = DateTime.now().toUtc();
+      final today = DateTime(now.year, now.month, now.day);
       final sevenDaysLater = now.add(const Duration(days: 7));
       final response = await _weatherApi.request(
         latitude: latitude,
@@ -33,7 +34,7 @@ class WeatherService {
           WeatherDaily.temperature_2m_min,
           WeatherDaily.weather_code,
         },
-        startDate: now,
+        startDate: today,
         endDate: sevenDaysLater,
       );
 
@@ -45,9 +46,9 @@ class WeatherService {
       final windMap = hourlyData[WeatherHourly.wind_speed_10m]!;
       final codeMap = hourlyData[WeatherHourly.weather_code]!;
       final times = tempMap.values.keys.toList();
-      int index = times.indexWhere((t) => !t.isBefore(now));
+      int index = times.lastIndexWhere((t) => !t.isAfter(now));
       if (index == -1) {
-        index = times.isNotEmpty ? times.length - 1 : 0;
+        index = 0;
       }
       final currentTime = times[index];
       final isDayValue =
