@@ -38,7 +38,7 @@ final weatherDataProvider =
         weatherData.currentWeather.weatherCode,
         isDay: weatherData.currentWeather.isDay == 1,
       );
-      final String formattedTime = Formatters.toHour(
+      final String formattedTime = Formatters.toRelativeTime(
         weatherData.currentWeather.time,
       );
 
@@ -70,8 +70,10 @@ final weatherDataProvider =
             final bool isPrecipitating = weatherCode >= 51 && weatherCode <= 99;
             return HourlyDisplayModel(
               time: isNow ? 'NOW' : Formatters.toHour(hour.time),
-              temperature: '${hour.temperature.round()}°',
-              precipitation: isPrecipitating ? '' : '${(hour.precipitation)}%',
+              temperature: Formatters.toCelcius(hour.temperature.toDouble()),
+              precipitation: isPrecipitating
+                  ? Formatters.toPercentage(hour.precipitation.toDouble())
+                  : '',
               weatherIcon: WeatherUtils.getWeatherIcon(
                 hour.weatherCode,
                 isDay: hour.time.hour >= 6 && hour.time.hour < 18,

@@ -17,6 +17,7 @@ dependencies:
   shared_preferences: ^2.1.0
   open_meteo: ^2.1.6
   geocoding: ^4.0.0
+  timeago: ^3.7.1
 
 dev_dependencies:
   flutter_test:
