@@ -40,7 +40,6 @@ final weatherDataProvider =
       final String formattedTime = Formatters.toHour(
         weatherData.currentWeather.time,
       );
-      final now = weatherData.referenceTime;
 
       final List<WeatherDisplayModel> formattedDailyWeather = weatherData
           .dailyWeather
@@ -60,15 +59,18 @@ final weatherDataProvider =
 
       final List<HourlyDisplayModel> formattedHourlyWeather = weatherData
           .hourlyWeather
+          .asMap()
+          .entries
           .map((hour) {
-            final isNow = hour.time.hour == now.hour;
+            final int index = hour.key;
+            final bool isNow = index == 0;
             return HourlyDisplayModel(
-              time: isNow ? 'NOW' : Formatters.toHour(hour.time),
-              temperature: '${hour.temperature.round()}°',
-              precipitation: '${(hour.precipitation)}%',
-              weatherIcon: WeatherUtils.getWeatherIcon(hour.weatherCode),
+              time: isNow ? 'NOW' : Formatters.toHour(hour.value.time),
+              temperature: '${hour.value.temperature.round()}°',
+              precipitation: isNow ? '' : '${(hour.value.precipitation)}%',
+              weatherIcon: WeatherUtils.getWeatherIcon(hour.value.weatherCode),
               weatherDescription: WeatherUtils.getWeatherDescription(
-                hour.weatherCode,
+                hour.value.weatherCode,
               ),
               isNow: isNow,
             );
