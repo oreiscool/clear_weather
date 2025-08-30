@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:clear_weather/services/weather_service.dart';
 import 'package:clear_weather/models/weather_model.dart';
-import 'package:clear_weather/providers/location_provider.dart';
 import 'package:clear_weather/models/weather_display_model.dart';
 import 'package:clear_weather/utils/formatters.dart';
 import 'package:clear_weather/utils/weather_utils.dart';
-
-final weatherServiceProvider = Provider<WeatherService>((ref) {
-  return WeatherService();
-});
+import 'package:clear_weather/providers/service_providers.dart';
+import 'package:clear_weather/providers/weather_repo_provider.dart';
 
 final weatherDataProvider =
     FutureProvider<
@@ -23,11 +19,12 @@ final weatherDataProvider =
         String formattedTime,
       })
     >((ref) async {
-      final weatherService = ref.watch(weatherServiceProvider);
+      await ref.watch(sharedPreferencesProvider.future);
+      final weatherRepo = ref.watch(weatherRepoProvider);
       final locationService = ref.watch(locationServiceProvider);
       final position = await locationService.getCurrentLocation();
       final cityName = await locationService.getCityName(position);
-      final weatherData = await weatherService.getWeather(
+      final weatherData = await weatherRepo.getWeather(
         latitude: position.latitude,
         longitude: position.longitude,
       );

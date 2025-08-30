@@ -18,6 +18,32 @@ class CurrentWeatherModel {
     required this.weatherCode,
     required this.isDay,
   });
+
+  factory CurrentWeatherModel.fromJson(Map<String, dynamic> json) {
+    return CurrentWeatherModel(
+      time: DateTime.parse(json['time']),
+      temperature: json['temperature'],
+      feelsLike: json['feelsLike'],
+      humidity: json['humidity'],
+      precipitation: json['precipitation'],
+      windSpeed: json['windSpeed'],
+      weatherCode: json['weatherCode'],
+      isDay: json['isDay'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'time': time.toIso8601String(),
+      'temperature': temperature,
+      'feelsLike': feelsLike,
+      'humidity': humidity,
+      'precipitation': precipitation,
+      'windSpeed': windSpeed,
+      'weatherCode': weatherCode,
+      'isDay': isDay,
+    };
+  }
 }
 
 class HourlyWeatherModel {
@@ -32,6 +58,24 @@ class HourlyWeatherModel {
     required this.precipitation,
     required this.weatherCode,
   });
+
+  factory HourlyWeatherModel.fromJson(Map<String, dynamic> json) {
+    return HourlyWeatherModel(
+      time: DateTime.parse(json['time']),
+      temperature: json['temperature'],
+      precipitation: json['precipitation'],
+      weatherCode: json['weatherCode'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'time': time.toIso8601String(),
+      'temperature': temperature,
+      'precipitation': precipitation,
+      'weatherCode': weatherCode,
+    };
+  }
 }
 
 class DailyWeatherModel {
@@ -46,6 +90,24 @@ class DailyWeatherModel {
     required this.temperatureMin,
     required this.weatherCode,
   });
+
+  factory DailyWeatherModel.fromJson(Map<String, dynamic> json) {
+    return DailyWeatherModel(
+      time: DateTime.parse(json['time']),
+      temperatureMax: json['temperatureMax'],
+      temperatureMin: json['temperatureMin'],
+      weatherCode: json['weatherCode'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'time': time.toIso8601String(),
+      'temperatureMax': temperatureMax,
+      'temperatureMin': temperatureMin,
+      'weatherCode': weatherCode,
+    };
+  }
 }
 
 class WeatherPackage {
@@ -60,4 +122,26 @@ class WeatherPackage {
     required this.dailyWeather,
     required this.referenceTime,
   });
+
+  factory WeatherPackage.fromJson(Map<String, dynamic> json) {
+    return WeatherPackage(
+      currentWeather: CurrentWeatherModel.fromJson(json['currentWeather']),
+      hourlyWeather: (json['hourlyWeather'] as List)
+          .map((item) => HourlyWeatherModel.fromJson(item))
+          .toList(),
+      dailyWeather: (json['dailyWeather'] as List)
+          .map((item) => DailyWeatherModel.fromJson(item))
+          .toList(),
+      referenceTime: DateTime.parse(json['referenceTime']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'currentWeather': currentWeather.toJson(),
+      'hourlyWeather': hourlyWeather.map((item) => item.toJson()).toList(),
+      'dailyWeather': dailyWeather.map((item) => item.toJson()).toList(),
+      'referenceTime': referenceTime.toIso8601String(),
+    };
+  }
 }

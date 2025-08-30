@@ -5,6 +5,7 @@ import 'package:clear_weather/widgets/hourly_forecast_display.dart';
 import 'package:clear_weather/widgets/daily_forecast_display.dart';
 import 'package:clear_weather/widgets/settings_modal.dart';
 import 'package:clear_weather/providers/weather_provider.dart';
+import 'package:clear_weather/data/exceptions/exceptions.dart';
 
 class WeatherPage extends ConsumerWidget {
   const WeatherPage({super.key});
@@ -12,6 +13,7 @@ class WeatherPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final weatherPackage = ref.watch(weatherDataProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: theme.colorScheme.surface,
@@ -31,31 +33,60 @@ class WeatherPage extends ConsumerWidget {
           ref.invalidate(weatherDataProvider);
           return await ref.read(weatherDataProvider.future);
         },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 250, child: CurrentWeatherDisplay()),
-                  const SizedBox(height: 16),
-                  Divider(
-                    height: 48,
-                    color: theme.colorScheme.surfaceContainerHighest,
+        child: weatherPackage.when(
+          data: (data) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 250,
+                        child: CurrentWeatherDisplay(data: data),
+                      ),
+                      const SizedBox(height: 16),
+                      Divider(
+                        height: 48,
+                        color: theme.colorScheme.surfaceContainerHighest,
+                      ),
+                      SizedBox(
+                        height: 200,
+                        child: HourlyForecastDisplay(data: data),
+                      ),
+                      Divider(
+                        height: 48,
+                        color: theme.colorScheme.surfaceContainerHighest,
+                      ),
+                      const SizedBox(height: 32),
+                      SizedBox(
+                        height: 150,
+                        child: DailyForecastDisplay(data: data),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 200, child: HourlyForecastDisplay()),
-                  Divider(
-                    height: 48,
-                    color: theme.colorScheme.surfaceContainerHighest,
-                  ),
-                  const SizedBox(height: 32),
-                  const SizedBox(height: 150, child: DailyForecastDisplay()),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
+          error: (err, stack) {
+            String errorMessage = "Something went wrong.";
+            if (err is NetworkException) {
+              errorMessage =
+                  "No internet connection. Please check your network and pull to refresh.";
+            } else if (err is NoNetworkException) {
+              errorMessage =
+                  "Couldn't update weather. Please check your internet connection.";
+            }
+            return Center(
+              child: Text(errorMessage, textAlign: TextAlign.center),
+            );
+          },
+          loading: () {
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );

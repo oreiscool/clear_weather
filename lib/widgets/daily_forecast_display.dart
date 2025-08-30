@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clear_weather/widgets/daily_forecast_item.dart';
-import 'package:clear_weather/providers/weather_provider.dart';
+import 'package:clear_weather/models/weather_model.dart';
+import 'package:clear_weather/models/weather_display_model.dart';
 
-class DailyForecastDisplay extends ConsumerWidget {
-  const DailyForecastDisplay({super.key});
+class DailyForecastDisplay extends StatelessWidget {
+  final ({
+    WeatherPackage weather,
+    List<WeatherDisplayModel> dailyDisplay,
+    List<HourlyDisplayModel> hourlyDisplay,
+    String cityName,
+    String weatherDescription,
+    IconData currentWeatherIcon,
+    String formattedTime,
+  })
+  data;
+
+  const DailyForecastDisplay({super.key, required this.data});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final weatherPackage = ref.watch(weatherDataProvider);
-    return weatherPackage.when(
-      data: (data) {
-        final dailyWeather = data.dailyDisplay;
-        return ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: dailyWeather.length,
-          itemBuilder: (context, index) {
-            return DailyForecastItem(dailyWeather[index]);
-          },
-        );
-      },
-      error: (err, stack) {
-        return Center(child: Text('Error: $err'));
-      },
-      loading: () {
-        return const Center(child: CircularProgressIndicator());
+  Widget build(BuildContext context) {
+    final dailyWeather = data.dailyDisplay;
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: dailyWeather.length,
+      itemBuilder: (context, index) {
+        return DailyForecastItem(dailyWeather[index]);
       },
     );
   }
