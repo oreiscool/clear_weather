@@ -11,10 +11,18 @@ class Formatters {
   }
 
   static String toCelcius(double temperature) {
-    return '${temperature.round()}°';
+    return '${temperature.round()}°C';
   }
 
   static String toFahrenheit(double temperature) {
+    return '${((temperature * 9 / 5) + 32).round()}°F';
+  }
+
+  static String toCelciusPlain(double temperature) {
+    return '${temperature.round()}°';
+  }
+
+  static String toFahrenheitPlain(double temperature) {
     return '${((temperature * 9 / 5) + 32).round()}°';
   }
 

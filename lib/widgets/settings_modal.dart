@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:clear_weather/providers/theme_provider.dart';
+import 'package:clear_weather/providers/settings_provider.dart';
 
 class SettingsModal extends ConsumerWidget {
   const SettingsModal({super.key});
@@ -9,6 +10,7 @@ class SettingsModal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentTheme = ref.watch(themeProvider);
     final theme = Theme.of(context);
+    final currentSettings = ref.watch(settingsProvider);
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(
@@ -52,12 +54,24 @@ class SettingsModal extends ConsumerWidget {
                   color: theme.cardColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: SwitchListTile(
-                  title: const Text('Dark Mode'),
-                  value: currentTheme == ThemeMode.dark,
-                  onChanged: (value) {
-                    ref.read(themeProvider.notifier).toggleTheme();
-                  },
+                child: Column(
+                  children: [
+                    SwitchListTile(
+                      title: const Text('Dark Mode'),
+                      value: currentTheme == ThemeMode.dark,
+                      onChanged: (value) {
+                        ref.read(themeProvider.notifier).toggleTheme();
+                      },
+                    ),
+                    SwitchListTile(
+                      title: const Text('Use Metric Units (C°, km/h)'),
+                      subtitle: const Text('Turn off for Imperial (F°, mph)'),
+                      value: currentSettings.isMetric,
+                      onChanged: (value) {
+                        ref.read(settingsProvider.notifier).toggleUnits();
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

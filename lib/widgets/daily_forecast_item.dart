@@ -5,7 +5,7 @@ import 'package:clear_weather/models/weather_display_model.dart';
 
 class DailyForecastItem extends ConsumerWidget {
   const DailyForecastItem(this.item, {super.key});
-  final WeatherDisplayModel item;
+  final DailyDisplayModel item;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class DailyForecastItem extends ConsumerWidget {
             Icon(item.weatherIcon, size: 32),
             SizedBox(height: 4),
             Text(
-              '${item.tempMax}/${item.tempMin}',
+              '${item.tempMax} / ${item.tempMin}',
               style: textStyles.dailyTemp,
             ),
           ],

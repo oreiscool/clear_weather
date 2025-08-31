@@ -9,7 +9,7 @@ class WeatherRepository {
   final WeatherService weatherService;
   final SharedPreferences prefs;
   static const _weatherCacheKey = 'weather_cache';
-  static final _cacheExpiration = Duration(minutes: 10);
+  static final _cacheExpiration = Duration(minutes: 30);
 
   WeatherRepository({required this.weatherService, required this.prefs});
 

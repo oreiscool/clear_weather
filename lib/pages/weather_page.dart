@@ -35,6 +35,9 @@ class WeatherPage extends ConsumerWidget {
         },
         child: weatherPackage.when(
           data: (data) {
+            final currentDisplayData = data.currentDisplay;
+            final hourlyDisplayData = data.hourlyDisplay;
+            final dailyDisplayData = data.dailyDisplay;
             return SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -45,7 +48,7 @@ class WeatherPage extends ConsumerWidget {
                     children: [
                       SizedBox(
                         height: 250,
-                        child: CurrentWeatherDisplay(data: data),
+                        child: CurrentWeatherDisplay(data: currentDisplayData),
                       ),
                       const SizedBox(height: 16),
                       Divider(
@@ -54,7 +57,7 @@ class WeatherPage extends ConsumerWidget {
                       ),
                       SizedBox(
                         height: 200,
-                        child: HourlyForecastDisplay(data: data),
+                        child: HourlyForecastDisplay(data: hourlyDisplayData),
                       ),
                       Divider(
                         height: 48,
@@ -63,7 +66,7 @@ class WeatherPage extends ConsumerWidget {
                       const SizedBox(height: 32),
                       SizedBox(
                         height: 150,
-                        child: DailyForecastDisplay(data: data),
+                        child: DailyForecastDisplay(data: dailyDisplayData),
                       ),
                     ],
                   ),

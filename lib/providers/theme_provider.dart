@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:clear_weather/theme/app_theme.dart';
+import 'package:clear_weather/providers/service_providers.dart';
 
 final themeProvider = NotifierProvider<ThemeNotifier, ThemeMode>(
   ThemeNotifier.new,
@@ -27,13 +27,13 @@ class ThemeNotifier extends Notifier<ThemeMode> {
   }
 
   Future<void> _loadTheme() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await ref.watch(sharedPreferencesProvider.future);
     final themeIndex = prefs.getInt(_themePrefKey) ?? 1;
     state = ThemeMode.values[themeIndex];
   }
 
   Future<void> _saveTheme(ThemeMode mode) async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await ref.watch(sharedPreferencesProvider.future);
     await prefs.setInt(_themePrefKey, mode.index);
   }
 
