@@ -18,6 +18,7 @@ dependencies:
   open_meteo: ^2.1.6
   geocoding: ^4.0.0
   timeago: ^3.7.1
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

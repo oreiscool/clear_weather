@@ -101,6 +101,7 @@ final weatherDataProvider =
           isDay: current.isDay == 1,
         ),
         formattedTime: Formatters.toRelativeTime(now),
+        referenceTime: now,
       );
 
       return (

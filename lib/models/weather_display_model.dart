@@ -46,6 +46,7 @@ class CurrentWeatherDisplayModel {
   final String weatherDescription;
   final IconData currentWeatherIcon;
   final String formattedTime;
+  final DateTime referenceTime;
 
   CurrentWeatherDisplayModel({
     required this.temperature,
@@ -57,5 +58,6 @@ class CurrentWeatherDisplayModel {
     required this.weatherDescription,
     required this.currentWeatherIcon,
     required this.formattedTime,
+    required this.referenceTime,
   });
 }
