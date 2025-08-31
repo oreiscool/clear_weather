@@ -58,6 +58,21 @@ final weatherDataProvider =
             final bool isNow = index == 0;
             final int weatherCode = hour.weatherCode;
             final bool isPrecipitating = weatherCode >= 51 && weatherCode <= 99;
+            final sunriseForDay = weatherData.sunrise.firstWhere(
+              (sunrise) =>
+                  sunrise.day == hour.time.day &&
+                  sunrise.month == hour.time.month,
+              orElse: () => weatherData.sunrise.first,
+            );
+            final sunsetForDay = weatherData.sunset.firstWhere(
+              (sunset) =>
+                  sunset.day == hour.time.day &&
+                  sunset.month == hour.time.month,
+              orElse: () => weatherData.sunset.first,
+            );
+            final bool isDay =
+                hour.time.isAfter(sunriseForDay) &&
+                hour.time.isBefore(sunsetForDay);
             return HourlyDisplayModel(
               time: isNow ? 'NOW' : Formatters.toHour(hour.time),
               temperature: settings.isMetric
@@ -68,7 +83,7 @@ final weatherDataProvider =
                   : '',
               weatherIcon: WeatherUtils.getWeatherIcon(
                 hour.weatherCode,
-                isDay: hour.time.hour >= 6 && hour.time.hour < 18,
+                isDay: isDay,
               ),
               weatherDescription: WeatherUtils.getWeatherDescription(
                 hour.weatherCode,

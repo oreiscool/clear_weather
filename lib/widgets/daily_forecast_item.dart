@@ -22,7 +22,7 @@ class DailyForecastItem extends ConsumerWidget {
             Icon(item.weatherIcon, size: 32),
             SizedBox(height: 4),
             Text(
-              '${item.tempMax} / ${item.tempMin}',
+              '${item.tempMax}/${item.tempMin}',
               style: textStyles.dailyTemp,
             ),
           ],

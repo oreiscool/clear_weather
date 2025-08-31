@@ -17,6 +17,7 @@ class WeatherService {
       final now = DateTime.now().toUtc();
       final today = DateTime(now.year, now.month, now.day);
       final sevenDaysLater = now.add(const Duration(days: 7));
+
       final response = await _weatherApi.request(
         latitude: latitude,
         longitude: longitude,
@@ -33,11 +34,22 @@ class WeatherService {
           WeatherDaily.temperature_2m_max,
           WeatherDaily.temperature_2m_min,
           WeatherDaily.weather_code,
+          WeatherDaily.sunrise,
+          WeatherDaily.sunset,
         },
         startDate: today,
         endDate: sevenDaysLater,
       );
 
+      final dailyData = response.dailyData;
+      final List<DateTime> sunriseList = dailyData[WeatherDaily.sunrise]!
+          .values
+          .keys
+          .toList();
+      final List<DateTime> sunsetList = dailyData[WeatherDaily.sunset]!
+          .values
+          .keys
+          .toList();
       final hourlyData = response.hourlyData;
       final tempMap = hourlyData[WeatherHourly.temperature_2m]!;
       final feelsMap = hourlyData[WeatherHourly.apparent_temperature]!;
@@ -87,7 +99,6 @@ class WeatherService {
       }
 
       final List<DailyWeatherModel> dailyWeather = [];
-      final dailyData = response.dailyData;
       final dailyTimes = dailyData[WeatherDaily.temperature_2m_max]!.values.keys
           .toList();
       for (final time in dailyTimes) {
@@ -111,6 +122,8 @@ class WeatherService {
         hourlyWeather: hourlyWeather,
         dailyWeather: dailyWeather,
         referenceTime: now,
+        sunrise: sunriseList,
+        sunset: sunsetList,
       );
     } catch (e) {
       debugPrint('Error fetching weather data: $e');

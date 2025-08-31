@@ -115,12 +115,16 @@ class WeatherPackage {
   final List<HourlyWeatherModel> hourlyWeather;
   final List<DailyWeatherModel> dailyWeather;
   final DateTime referenceTime;
+  final List<DateTime> sunrise;
+  final List<DateTime> sunset;
 
   WeatherPackage({
     required this.currentWeather,
     required this.hourlyWeather,
     required this.dailyWeather,
     required this.referenceTime,
+    required this.sunrise,
+    required this.sunset,
   });
 
   factory WeatherPackage.fromJson(Map<String, dynamic> json) {
@@ -133,6 +137,12 @@ class WeatherPackage {
           .map((item) => DailyWeatherModel.fromJson(item))
           .toList(),
       referenceTime: DateTime.parse(json['referenceTime']),
+      sunrise: (json['sunrise'] as List)
+          .map((item) => DateTime.parse(item))
+          .toList(),
+      sunset: (json['sunset'] as List)
+          .map((item) => DateTime.parse(item))
+          .toList(),
     );
   }
 
@@ -142,6 +152,8 @@ class WeatherPackage {
       'hourlyWeather': hourlyWeather.map((item) => item.toJson()).toList(),
       'dailyWeather': dailyWeather.map((item) => item.toJson()).toList(),
       'referenceTime': referenceTime.toIso8601String(),
+      'sunrise': sunrise.map((item) => item.toIso8601String()).toList(),
+      'sunset': sunset.map((item) => item.toIso8601String()).toList(),
     };
   }
 }
