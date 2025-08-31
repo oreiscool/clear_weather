@@ -48,7 +48,7 @@ A clean, minimalist weather app built with Flutter. Get accurate hourly and dail
 
 1. **Clone the repository**
 	```bash
-	git clone <your-repo-url>
+	git clone https://github.com/oreiscool/clear_weather.git
 	cd clear_weather
 	```
 
