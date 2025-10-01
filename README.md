@@ -106,7 +106,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Weather data powered by Open-Meteo
 - Icons from Material Design
 - Inspired by clean, minimalist design principles
-
----
-
-**Made by Stevie**
