@@ -83,8 +83,21 @@ class WeatherPage extends ConsumerWidget {
               errorMessage =
                   "Couldn't update weather. Please check your internet connection.";
             }
-            return Center(
-              child: Text(errorMessage, textAlign: TextAlign.center),
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height - kToolbarHeight,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Text(
+                      errorMessage,
+                      style: theme.textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
             );
           },
           loading: () {

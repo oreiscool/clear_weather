@@ -1,7 +1,7 @@
 name: clear_weather
 description: "Clean, minimal weather app with hourly forecasts and location-based updates."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ^3.9.0
